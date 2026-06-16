@@ -4,6 +4,35 @@ A complete NLP-powered ATS (Applicant Tracking System) scoring tool that analyze
 resume–job description fit using keyword extraction, TF-IDF cosine similarity,
 and structural gap analysis.
 
+## What is an ATS Resume Scorer?
+An ATS (Applicant Tracking System) Resume Scorer analyzes how well a resume aligns with a job description using:
+
+- Keyword extraction - Identify required skills & technologies
+- Semantic similarity - Measure content overlap (TF-IDF cosine similarity)
+- Structural analysis - Detect contact info, education, sections
+- Gap identification - Show missing keywords and categories
+
+## Why This Matters
+Real-world impact:
+- 98% of Fortune 500 companies use ATS systems
+- Resumes are filtered by ATS before human review
+- Keyword match is primary ATS criterion
+- Many qualified candidates are filtered out automatically
+- This tool helps candidates optimize before applying
+
+## Key Advantages
+✓ Fast - Sub-second scoring with no external API calls 
+
+✓ Interpretable - Show exactly why resume matches or doesn't 
+
+✓ Multi-modal - Accept plain text or .docx files 
+
+✓ Comprehensive - TF-IDF + keyword matching + structural analysis 
+
+✓ Actionable - Provide specific improvement suggestions 
+
+✓ No model download - Uses spaCy blank tokenizer (fast, lightweight)
+
 ---
 
 ## Quick Start
@@ -26,50 +55,7 @@ Open **http://localhost:8000** — paste a job description + resume, click **Ana
 ---
 
 ## Architecture
-
-```
-Job Description (text / .docx)       Resume (text / .docx)
-         │                                    │
-         ▼                                    ▼
-   clean_text()                         clean_text()
-         │                                    │
-         ▼                                    │
- extract_keywords()                           │
-   ├── Multi-word phrase regex               │
-   │   (machine learning, FastAPI…)          │
-   ├── spaCy blank tokenizer                 │
-   ├── NLTK stopword filtering               │
-   └── PorterStemmer normalization           │
-         │                                    │
-         ▼                                    ▼
-  keyword_match_score() ─────────────────────┘
-   (stem-based matching, literal substring check)
-         │
-         ▼
- compute_tfidf_similarity()
-   TfidfVectorizer(ngram_range=(1,2), sublinear_tf=True)
-   cosine_similarity(jd_vector, resume_vector)
-         │
-         ▼
- structural_analysis()
-   (email, phone, LinkedIn, education, experience,
-    projects, skills section, quantified achievements)
-         │
-         ▼
- Composite ATS Score
-   40% × TF-IDF cosine similarity
-   45% × keyword match percentage
-   15% × structural completeness
-         │
-         ▼
- FastAPI JSON Response
-   {ats_score, grade, verdict, cosine_sim,
-    keyword_match, matched_keywords, missing_keywords,
-    categories, struct_indicators, tips}
-         │
-         ▼
- HTML Dashboard (served at GET /)
-```
+<img width="1408" height="768" alt="unnamed" src="https://github.com/user-attachments/assets/40f899f8-ead9-42aa-9e76-f2a76535f2e2" />
 
 ---
 
